@@ -1,0 +1,71 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:best-practices',
+    ':approveMajorUpdates',
+  ],
+
+  // Opt in to k8s manifests (disabled by default in Renovate)
+  kubernetes: {
+    managerFilePatterns: ['deploy/lepro-debug/k8s/.+\\.yaml$'],
+  },
+
+  // Track root .go-version (not covered by gomod manager)
+  customManagers: [
+    {
+      customType: 'regex',
+      description: 'Root .go-version file',
+      managerFilePatterns: ['/^\\.go-version$/'],
+      matchStrings: ['^(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*$'],
+      datasourceTemplate: 'golang-version',
+      depNameTemplate: 'go',
+      versioningTemplate: 'go-mod-directive',
+    },
+  ],
+
+  packageRules: [
+    // --- Grouping (reduce PR noise) ---
+    { matchManagers: ['github-actions'], groupName: 'GitHub Actions' },
+    { matchManagers: ['pep621'], groupName: 'Python dependencies' },
+    {
+      matchManagers: ['gomod'],
+      matchDepTypes: ['require'],
+      matchUpdateTypes: ['minor', 'patch'],
+      groupName: 'Go modules',
+    },
+    {
+      matchManagers: ['dockerfile', 'docker-compose', 'kubernetes'],
+      groupName: 'Container images',
+    },
+
+    // --- Go toolchain (official gomod pattern) ---
+    // go directive in go.mod is NOT updated by default; this enables it
+    {
+      description: 'go.mod go directive — track toolchain bumps',
+      groupName: 'Go toolchain',
+      matchManagers: ['gomod'],
+      matchDepNames: ['go'],
+      matchDepTypes: ['golang'],
+      rangeStrategy: 'bump',
+      automerge: false,
+    },
+    // Best-effort: group .go-version custom manager with go directive updates
+    {
+      groupName: 'Go toolchain',
+      matchManagers: ['custom.regex'],
+      matchDepNames: ['go'],
+      automerge: false,
+    },
+
+    // --- Python version guard ---
+    // pyenv manager defaults to docker versioning; fix per GLiNER-API pattern
+    {
+      matchManagers: ['pyenv'],
+      allowedVersions: '3.13.x',
+      versioning: 'python',
+    },
+
+    // --- Ignore local-only debug image ---
+    { matchPackageNames: ['lepro-bridge'], enabled: false },
+  ],
+}
