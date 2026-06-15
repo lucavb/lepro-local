@@ -1,0 +1,12 @@
+{
+  "input": {},
+  "lepro_inner": {
+    "d1": 1
+  },
+  "lepro_set": {
+    "d": {
+      "d1": 1
+    }
+  },
+  "tasmota_power": "ON"
+}

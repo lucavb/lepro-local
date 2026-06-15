@@ -1,0 +1,23 @@
+{
+  "patched_file": "firmware/3_le_light_zb1_pid_55_v2.3.18.patched.bin",
+  "generated_at": "2026-06-13T10:01:16+0200",
+  "on_disk_md5": "cd43ed5abb6ede87c217628c94029e16",
+  "ota_payload_md5": "11a2750c84e6672f20be46e565a7b892",
+  "ota_version_string": "2.3.19",
+  "record_sha256": "6ac96723305ea18c1032de4cf563d57765a32ff9fd1d0a93c11ef9a3da47b523",
+  "name_sha256": "274e6dbcffff4b7342490afba22a2d3c3a1c37970b9100c63b603c6adc7b1021",
+  "key_sha256": "14c522906c63e78260af730e9a74c524cc96ddea1025d528be2eeb30818b1d6a",
+  "record_matches_cdn_pem": true,
+  "name_matches_cdn_pem": true,
+  "key_matches_cdn_pem": true,
+  "record_matches_live_traefik": true,
+  "diff_from_stock_bytes": 254,
+  "stock_record_sha256": "97dc9428cd180ea1b3c2e68216d42f8a80e611b8ddad473236e7a0a7de9074db",
+  "stock_name_sha256": "274e6dbcffff4b7342490afba22a2d3c3a1c37970b9100c63b603c6adc7b1021",
+  "stock_key_sha256": "89891211d86d9dcc112aad8a9a98e34148f0b3c5d2ae2759c7b466d03681e98b",
+  "bundle_off": "0x9fd3",
+  "entry_off": "0x9fda",
+  "key_off": "0xa042",
+  "name_len": 104,
+  "key_len": 294
+}

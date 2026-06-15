@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lepro-cert-cdn
+  namespace: lepro-debug
+  labels:
+    app: lepro-cert-cdn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lepro-cert-cdn
+  template:
+    metadata:
+      labels:
+        app: lepro-cert-cdn
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 8080
+              name: http
+            - containerPort: 8443
+              name: https
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: lepro-certs
+              mountPath: /certs
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 5
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: lepro-cert-cdn
+        - name: lepro-certs
+          secret:
+            secretName: lepro-mock-pki

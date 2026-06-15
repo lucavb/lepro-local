@@ -1,0 +1,35 @@
+# Firmware patch profiles for lepro-firmware patch/verify.
+# Add a new [[profiles]] block when Lepro ships a new ZB1 (or other) image.
+# Byte patches: offset + stock_hex (expected in stock firmware) + patched_hex (lab image).
+# CDN bundle pin: replacement bytes come from --cert / --cert-host at patch time.
+
+default_profile = "zb1_v2_3_18"
+
+[[profiles]]
+id = "zb1_v2_3_18"
+description = "Lepro ZB1 pid 55, stock v2.3.18"
+chip = "esp32s3"
+image_glob = "3_le_light_zb1_pid_55_v2.3.18*.bin"
+stock_image = "firmware/3_le_light_zb1_pid_55_v2.3.18.bin"
+patched_image = "firmware/3_le_light_zb1_pid_55_v2.3.18.patched.bin"
+ota_url = "https://ota-dvc-eu-iot.lepro.com/pub/ota/3_le_light_zb1_pid_55_v2.3.18.bin"
+
+[profiles.bundle]
+signature_hex = "00000100680126"
+attach_error = "Failed to attach bundle"
+lookback = 512
+expected_cert_count = 1
+# bundle_off = 0x9fd3   # optional fixed override (CLI --bundle-off/--pin-off still wins)
+# entry_off = 0x9fda
+
+[[profiles.patches]]
+name = "prov_mode gate"
+offset = 0x2a1ca
+stock_hex = "f6241c"
+patched_hex = "f02000"
+
+[[profiles.patches]]
+name = "arm-flag gate"
+offset = 0x2b21f
+stock_hex = "471a12"
+patched_hex = "a71a12"

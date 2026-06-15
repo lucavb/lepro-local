@@ -1,0 +1,37 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Local creds and captures
+captures.log
+lepro-lab.toml
+~/.lepro/
+*.pcap
+
+# Cursor IDE debug logs
+.cursor/debug-*.log
+
+# APK / research artifacts (not for git)
+tmp/
+*.xapk
+
+# Firmware binaries (fetch with lepro-firmware)
+firmware/*.bin
+firmware/*.elf
+firmware/*.patched.bin
+
+# Go bridge build output
+bridge/lepro-bridge
+
+# Docker lab TLS material
+deploy/docker/certs/
+
+# Extracted TLS material (optional local copy)
+deploy/lepro-prod/certs/

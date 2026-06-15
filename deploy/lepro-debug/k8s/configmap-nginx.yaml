@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lepro-cert-cdn
+  namespace: lepro-debug
+data:
+  nginx.conf: |
+    worker_processes 1;
+    events { worker_connections 128; }
+    http {
+      include       mime.types;
+      default_type  application/octet-stream;
+      sendfile on;
+      log_format lepro '$remote_addr - $request [$time_local] "$http_user_agent"';
+      access_log /dev/stdout lepro;
+
+      # Shared cert paths (HTTP via ingress + HTTPS direct LB on 10.0.0.5:443).
+      server {
+        listen 8080;
+        listen 8443 ssl;
+        ssl_certificate     /certs/cdn.pem;
+        ssl_certificate_key /certs/cdn.key;
+        server_name _;
+        root /certs;
+
+        location /pub/cert/lepro-ca.pem {
+          alias /certs/ca.pem;
+        }
+        location /pub/cert/AmazonRootCA13.pem {
+          alias /certs/ca.pem;
+        }
+        location /pub/cert/AmazonRootCA1.pem {
+          alias /certs/ca.pem;
+        }
+        location /device/cert/ {
+          try_files /client-bundle.pem =404;
+        }
+        location = /device/cert/did/debug/ver/1/sign/lepro {
+          alias /certs/client-bundle.pem;
+        }
+        location /healthz {
+          return 200 "ok\n";
+          add_header Content-Type text/plain;
+        }
+      }
+    }

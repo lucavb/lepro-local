@@ -1,0 +1,19 @@
+/* Example — copy to lepro_creds.h after bonding (see esp32/README.md) */
+#pragma once
+#include <stdint.h>
+#include <stddef.h>
+
+#define LEPRO_MAC "10:20:BA:31:B2:BA"
+#define LEPRO_AES_KEY { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+
+static const uint8_t LEPRO_TOKEN_HS[] = { 0x00 };
+static const uint8_t LEPRO_TOKEN_AUTH_16[] = { 0x00 };
+static const uint8_t LEPRO_TOKEN_AUTH_32[] = { 0x00 };
+static const uint8_t LEPRO_TOKEN_CTRL_C[] = { 0x00 };
+static const uint8_t LEPRO_TOKEN_CTRL_D[] = { 0x00 };
+
+#define LEPRO_TOKEN_HS_LEN 1
+#define LEPRO_TOKEN_AUTH_16_LEN 1
+#define LEPRO_TOKEN_AUTH_32_LEN 1
+#define LEPRO_TOKEN_CTRL_C_LEN 1
+#define LEPRO_TOKEN_CTRL_D_LEN 1

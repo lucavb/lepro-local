@@ -1,0 +1,34 @@
+# Copy to lepro-lab.toml (gitignored; also excluded from Cursor/Claude context).
+#   cp lepro-lab.toml.example lepro-lab.toml
+#
+# Device identity (MQTT path; optional for BLE-only)
+[device]
+id = "3619294555"
+friendly_name = "patio-lights"
+
+# Lab MQTT + CDN hostnames (DNS must resolve to your broker/CDN server)
+[lab]
+cdn_host = "dvc-eu-iot.example.home"
+mqtt_host = "mqtt.example.home"
+mqtt_port = "8883"
+
+# WiFi credentials sent during BLE provision — fill in locally
+[wifi]
+ssid = "your-iot-wifi"
+password = "secret"
+
+# For your Go MQTT bridge (not used by Python tools in this repo)
+[bridge]
+home_broker = "mqtt://127.0.0.1:1883"
+lepro_broker = "mqtts://mqtt.example.home:8883"
+ca_file = "deploy/docker/certs/ca.pem"
+tls_server_name = "mqtt.example.home"
+tls_insecure = false
+# cert_file = "deploy/docker/certs/client.pem"
+# key_file = "deploy/docker/certs/client.key"
+
+# The bridge also supports env-only config:
+# LEPRO_DEVICE_ID=3619294555
+# LEPRO_DEVICE_FRIENDLY_NAME=patio-lights
+# LEPRO_HOME_BROKER=mqtt://127.0.0.1:1883
+# LEPRO_LEPRO_BROKER=mqtts://mqtt.example.home:8883

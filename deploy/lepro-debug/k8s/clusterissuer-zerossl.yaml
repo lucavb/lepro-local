@@ -1,0 +1,27 @@
+# ZeroSSL ACME (free 90-day certs). Requires EAB — run setup-zerossl-eab.sh first.
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: zerossl-prod-lepro
+spec:
+  acme:
+    email: admin@example.com
+    server: https://acme.zerossl.com/v2/DV90
+    privateKeySecretRef:
+      name: zerossl-prod-lepro-account-key
+    externalAccountBinding:
+      keyID: __ZEROSSL_EAB_KID__
+      keySecretRef:
+        name: zerossl-eab-lepro
+        key: secret
+    solvers:
+      - dns01:
+          webhook:
+            config:
+              secretNamespace: cert-manager
+              secretRef: netcup-api-credentials
+            groupName: acme.example.home
+            solverName: netcup
+        selector:
+          dnsZones:
+            - example.home

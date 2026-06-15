@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto
+  namespace: lepro-debug
+  annotations:
+    metallb.universe.tf/allow-shared-ip: lepro-lb
+    metallb.io/loadBalancerIPs: "10.0.0.5"
+spec:
+  type: LoadBalancer
+  selector:
+    app: mosquitto
+  ports:
+    - name: mqtts
+      port: 8883
+      targetPort: mqtts
+      protocol: TCP

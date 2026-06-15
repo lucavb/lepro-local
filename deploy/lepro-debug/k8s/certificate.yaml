@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: lepro-debug-tls
+  namespace: lepro-debug
+spec:
+  secretName: lepro-debug-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: zerossl-prod-lepro
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  dnsNames:
+    - dvc-eu-iot.example.home
+    - mqtt.example.home

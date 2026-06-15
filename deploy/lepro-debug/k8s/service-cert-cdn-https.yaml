@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lepro-cert-cdn-https
+  namespace: lepro-debug
+  annotations:
+    metallb.universe.tf/allow-shared-ip: lepro-lb
+    metallb.io/loadBalancerIPs: "10.0.0.5"
+spec:
+  type: LoadBalancer
+  selector:
+    app: lepro-cert-cdn
+  ports:
+    - name: https
+      port: 443
+      targetPort: https
+      protocol: TCP

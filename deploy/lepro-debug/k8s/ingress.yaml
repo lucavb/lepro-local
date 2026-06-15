@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lepro-cert-cdn
+  namespace: lepro-debug
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    # Bulbs reach this from IoT WiFi — no internal IP allowlist.
+    traefik.ingress.kubernetes.io/router.middlewares: kube-system-redirect-https@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - dvc-eu-iot.example.home
+      secretName: lepro-cdn-tls
+  rules:
+    - host: dvc-eu-iot.example.home
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lepro-cert-cdn
+                port:
+                  number: 80
