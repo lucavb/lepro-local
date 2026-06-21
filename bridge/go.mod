@@ -3,7 +3,7 @@ module github.com/lucavb/lepro-local/bridge
 go 1.26.4
 
 require (
-	github.com/BurntSushi/toml v1.5.0
+	github.com/BurntSushi/toml v1.6.0
 	github.com/eclipse/paho.mqtt.golang v1.5.1
 )
 
