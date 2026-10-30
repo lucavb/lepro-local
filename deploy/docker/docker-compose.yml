@@ -1,6 +1,6 @@
 services:
   mosquitto:
-    image: eclipse-mosquitto:2.0.20
+    image: eclipse-mosquitto:2.0.22@sha256:09b62ff32c2e7b64d4b431b9a89236073289b68db273de2b089edeb9b0d92b5c
     ports:
       - "1883:1883"
       - "8883:8883"
@@ -9,7 +9,7 @@ services:
       - ./certs:/mosquitto/certs:ro
 
   cdn:
-    image: nginx:1.27-alpine
+    image: nginx:1.31-alpine@sha256:785835ea65db4bba6f021acc0f3be91b0fef76a53fe41f8588c6698d2aed0606
     ports:
       - "443:443"
     volumes:
